@@ -10,12 +10,15 @@
 ;; Use set-make-coqbyte to build bytecode coq instead, set-make-timed to get timing 
 ;; info on each .v
 ;;
+;; Use coq-make-tags to rebuild the TAGS file.
 ;;
-;; Coq Debugging
+;; ;; Coq Debugging
 ;; Requires a "dev/myinclude" file with at least a [#use "include";;] in it.
 ;; Debugging mode: C-c C-d opens the *coq* buffer where traces appear
 ;; Interactive coq-trace to trace a specific function, coq-untrace to stop tracing it
 ;;
+;; You might want to add to your .emacs:
+;; (setq enable-local-variables :all)
 ;;
 ;;(load-file "~/research/coq/contribs/coqfingroups/ssreflect/ssreflect1.3_v8.4/pg-ssr.el")
 
@@ -82,6 +85,12 @@
     (setq arg (find-makefile))
     (set (make-local-variable 'compile-command)
 	 (setq compile-command (concat "make " arg)))))
+
+(defun coq-make-tags ()
+  (interactive)
+  (progn 
+    (setq arg (find-makefile))
+    (shell-command (concat "make " arg " tags"))))
 
 (defun set-make-timed ()
   (interactive)
@@ -236,8 +245,12 @@
 
 (defun coq-untrace ()
   (interactive)
-  (let ((trace (read-string "function to trace: " "")))
+  (let ((trace (read-string "function to untrace: " "")))
     (coq-debug-cmd (concat "#untrace " trace ";;"))))
+
+(defun coq-reload-include ()
+  (interactive)
+  (coq-debug-cmd "#use \"myinclude\";;\n"))
 
 (add-hook 'coq-mode-hook
   (lambda ()
