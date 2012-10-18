@@ -26,8 +26,8 @@
  proof-electric-terminator-enable t
  proof-three-window-enable t)
 
-(defvar coqrc-path "/Users/mat")
-(defvar coq-root "/Volumes/Dev/coq")
+(defvar coqrc-path "/Users/mat/")
+(defvar coq-root "/Volumes/Dev/coq/")
 
 (defun coq-cmd (cmd)
   (save-current-buffer
@@ -164,13 +164,13 @@
   (interactive)
   (set-coqenv (concat coq-root "git/") nil ".coqrc-git"))
 
-(defun set-fresh-trunk-coqbyte ()
+(defun set-trunk-coqbyte ()
   (interactive)
-  (set-coqenv (concat coq-root "fresh-trunk/") t ".coqrc"))
+  (set-coqenv (concat coq-root "trunk/") t ".coqrc"))
 
-(defun set-fresh-trunk-coqopt ()
+(defun set-trunk-coqopt ()
   (interactive)
-  (set-coqenv (concat coq-root "fresh-trunk/") nil ".coqrc"))
+  (set-coqenv (concat coq-root "trunk/") nil ".coqrc"))
 
 (defun set-ssr-coqbyte ()
   (interactive)
@@ -189,8 +189,8 @@
 	(set-coqbyte)
     (if (string-match ".*coq/SFI.*" buffer-file-name)
 	(set-8.3-coqopt)
-      (if (string-match ".*coq/v8.2.*" buffer-file-name)
-	  (set-8.2-coqbyte)
+      (if (string-match ".*coq/trunk.*" buffer-file-name)
+	  (set-trunk-coqbyte)
 	(if (string-match ".*coq/v8.3.*" buffer-file-name)
 	    (set-8.3-coqbyte)
 	  (if (string-match ".*coq/v8.4.*" buffer-file-name)
